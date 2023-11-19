@@ -61,7 +61,7 @@ class LanguageSelectionApp:
         self.availability_slider.pack()
 
         # Security Mechanisms
-        self.security_mechanisms_label = tk.Label(master, text="Availability:")
+        self.security_mechanisms_label = tk.Label(master, text="Security Mechanisms:")
         self.security_mechanisms_label.pack()
 
         self.security_mechanisms_slider = tk.Scale(root, from_=0, to=100, orient="horizontal", length=300)
@@ -71,7 +71,7 @@ class LanguageSelectionApp:
         tk.Label(text="", pady=5).pack()  # break
 
         # RESULT
-        self.result_button = tk.Button(master, text="Result", command=self.get_predict)
+        self.result_button = tk.Button(master, text="Result", command=self.get_predict, bg="grey", width=15, height=2)
         self.result_button.pack()
 
         self.result_label = tk.Label(master, text="Result: -----", font=("Helvetica", 16), pady=10)
