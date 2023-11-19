@@ -1,6 +1,5 @@
 import unittest
 import tkinter as tk
-from tkinter import messagebox
 from main import LanguageSelectionApp, read_data, get_model
 
 

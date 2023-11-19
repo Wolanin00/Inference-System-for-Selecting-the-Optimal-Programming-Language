@@ -16,9 +16,15 @@ def read_data(in_test=False):
 
 def get_model(data, preferred_language=None):
     if preferred_language:
-        data[0].at[6, "Security Mechanisms"] = 31
-    random_forest_classifier_model = RandomForestClassifier()
-    random_forest_classifier_model.fit(data[0], data[1])
+        preferred_language_index = data[1][data[1] == preferred_language].index[0]
+        sample_weights = [1.0]*len(data[1])
+        sample_weights[preferred_language_index] = 2.0
+
+        random_forest_classifier_model = RandomForestClassifier(random_state=42)
+        random_forest_classifier_model.fit(data[0], data[1], sample_weight=sample_weights)
+    else:
+        random_forest_classifier_model = RandomForestClassifier(random_state=42)
+        random_forest_classifier_model.fit(data[0], data[1])
     return random_forest_classifier_model
 
 
@@ -28,7 +34,20 @@ class LanguageSelectionApp:
         # SET UI
         master.title("Choosing a Programming Language")
         self.row = 0
+        self.model = model
         pad_x = 15
+
+        tk.Label(text="", pady=5).grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)  # break
+        self.preferred_lang = tk.Label(master, text="Preferred Language:")
+        self.preferred_lang.grid(row=self.row, column=0)
+
+        options = list(self.model.classes_)
+        options.append("None")
+        selected_option = tk.StringVar(master)
+        selected_option.set("None")
+        self.preferred_lang_button = tk.OptionMenu(master, selected_option, *options, command=self.update_model_about_preferred_lang)
+        self.preferred_lang_button.config(width=15, height=2)
+        self.preferred_lang_button.grid(row=self.increment_and_return_row_number(), column=1)
 
         tk.Label(text="", pady=5).grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)  # break
 
@@ -40,27 +59,26 @@ class LanguageSelectionApp:
         self.easy_slider.set(50)
         self.easy_slider.grid(row=self.increment_and_return_row_number(), column=0, pady=3, columnspan=2, padx=pad_x)
 
-        # Frontend
+        # Frontend and Backend
         self.frontend_label = tk.Label(master, text="Frontend:")
-        self.frontend_label.grid(row=self.increment_and_return_row_number(), column=0)
+        self.frontend_label.grid(row=self.row, column=0)
+
+        self.backend_label = tk.Label(master, text="Backend:")
+        self.backend_label.grid(row=self.increment_and_return_row_number(), column=1)
 
         self.frontend_switch_var = tk.BooleanVar(value=False)
         self.frontend_switch_button = tk.Button(master, text="NO",
                                                 command=lambda: self.toggle_switch(switch_var=self.frontend_switch_var,
                                                                                    button=self.frontend_switch_button),
                                                 bg="grey", width=15, height=2)
-        self.frontend_switch_button.grid(row=self.increment_and_return_row_number(), column=0)
-
-        # Backend
-        self.backend_label = tk.Label(master, text="Backend:")
-        self.backend_label.grid(row=3, column=1)
+        self.frontend_switch_button.grid(row=self.row, column=0)
 
         self.backend_switch_var = tk.BooleanVar(value=False)
         self.backend_switch_button = tk.Button(master, text="NO",
                                                command=lambda: self.toggle_switch(switch_var=self.backend_switch_var,
                                                                                   button=self.backend_switch_button),
                                                bg="grey", width=15, height=2)
-        self.backend_switch_button.grid(row=4, column=1)
+        self.backend_switch_button.grid(row=self.increment_and_return_row_number(), column=1)
 
         tk.Label(text="").grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)  # break
 
@@ -98,7 +116,7 @@ class LanguageSelectionApp:
 
         # RESULT
         self.result_button = tk.Button(master, text="Result",
-                                       command=lambda: self.get_predict(model_to_predict=model),
+                                       command=lambda: self.get_predict(model_to_predict=self.model),
                                        bg="grey",
                                        width=15, height=2)
         self.result_button.grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)
@@ -117,19 +135,22 @@ class LanguageSelectionApp:
             button.config(text="YES", bg="green")
             switch_var.set(True)
 
+    def update_model_about_preferred_lang(self, selected_option):
+        if selected_option != "None":
+            new_model = get_model(data=read_data(), preferred_language=selected_option)
+            self.model = new_model
+
     def increment_and_return_row_number(self):
         row = self.row
         self.row += 1
         return row
 
     def get_predict(self, model_to_predict):
-        double_weight = 2
-
         new_case = pd.DataFrame(
             {
                 'Easy to program': [self.easy_slider.get() / 100],
-                "Frontend": [double_weight * self.frontend_switch_var.get()],
-                "Backend": [double_weight * self.backend_switch_var.get()],
+                "Frontend": [self.frontend_switch_var.get()],
+                "Backend": [self.backend_switch_var.get()],
                 "Data Analysis": [self.data_analysis_switch_var.get()],
                 "Availability": [self.availability_slider.get() / 100],
                 "Security Mechanisms": [self.security_mechanisms_slider.get() / 100],
