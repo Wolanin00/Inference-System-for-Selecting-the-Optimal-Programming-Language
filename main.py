@@ -5,9 +5,13 @@ from sklearn.ensemble import RandomForestClassifier
 
 class LanguageSelectionApp:
     def __init__(self, master):
-        master.title("Choosing a Programming Language")
+
+        programing_language_data = self.read_data()
+        model = self.get_model(programing_language_data)
 
         # UI
+        master.title("Choosing a Programming Language")
+
         tk.Label(text="", pady=5).pack()  # break
 
         # Easy to program
@@ -71,7 +75,8 @@ class LanguageSelectionApp:
         tk.Label(text="", pady=5).pack()  # break
 
         # RESULT
-        self.result_button = tk.Button(master, text="Result", command=self.get_predict, bg="grey", width=15, height=2)
+        self.result_button = tk.Button(master, text="Result", command=lambda: self.get_predict(model), bg="grey",
+                                       width=15, height=2)
         self.result_button.pack()
 
         self.result_label = tk.Label(master, text="Result: -----", font=("Helvetica", 16), pady=10)
@@ -88,28 +93,37 @@ class LanguageSelectionApp:
             button.config(text="YES", bg="green")
             switch_var.set(True)
 
-    def get_predict(self):
+    @staticmethod
+    def read_data():
         data = pd.read_excel("./prog_lang_db.xlsx")
         x_col = data.columns.drop('Programing language')
         x = data[x_col]
         y = data['Programing language']
-        model = RandomForestClassifier()
-        model.fit(x, y)
+        return [x, y]
 
+    @staticmethod
+    def get_model(data):
+        model = RandomForestClassifier()
+        model.fit(data[0], data[1])
+        return model
+
+    def get_predict(self, model):
         new_case = pd.DataFrame(
             {
                 'Easy to program': [self.easy_slider.get() / 100],
                 "Frontend": [self.frontend_switch_var.get()],
                 "Backend": [self.backend_switch_var.get()],
                 "Data Analysis": [self.data_analysis_switch_var.get()],
-                "Availability": [self.availability_slider.get()/100],
-                "Security Mechanisms": [self.security_mechanisms_slider.get()/100],
+                "Availability": [self.availability_slider.get() / 100],
+                "Security Mechanisms": [self.security_mechanisms_slider.get() / 100],
             })
         predictions = model.predict(new_case)
         self.result_label.config(text=f"Result: {predictions[0]}")
 
 
-root = tk.Tk()
-root.geometry("400x600")
-app = LanguageSelectionApp(root)
-root.mainloop()
+if __name__ == '__main__':
+
+    root = tk.Tk()
+    root.geometry("400x600")
+    app = LanguageSelectionApp(root)
+    root.mainloop()
