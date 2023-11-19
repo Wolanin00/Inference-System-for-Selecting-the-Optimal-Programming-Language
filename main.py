@@ -3,8 +3,11 @@ import tkinter as tk
 from sklearn.ensemble import RandomForestClassifier
 
 
-def read_data():
-    data = pd.read_excel("./prog_lang_db.xlsx")
+def read_data(in_test=False):
+    if in_test:
+        data = pd.read_excel("../prog_lang_db.xlsx")
+    else:
+        data = pd.read_excel("./prog_lang_db.xlsx")
     x_col = data.columns.drop('Programing language')
     x = data[x_col]
     y = data['Programing language']
@@ -20,7 +23,7 @@ def get_model(data):
 class LanguageSelectionApp:
     def __init__(self, master, model):
 
-        # UI
+        # SET UI
         master.title("Choosing a Programming Language")
 
         tk.Label(text="", pady=5).pack()  # break
@@ -29,7 +32,7 @@ class LanguageSelectionApp:
         self.easy_label = tk.Label(master, text="Easy to program:")
         self.easy_label.pack()
 
-        self.easy_slider = tk.Scale(root, from_=0, to=100, orient="horizontal", length=300)
+        self.easy_slider = tk.Scale(master, from_=0, to=100, orient="horizontal", length=300)
         self.easy_slider.set(50)
         self.easy_slider.pack()
 
@@ -38,7 +41,7 @@ class LanguageSelectionApp:
         self.frontend_label.pack()
 
         self.frontend_switch_var = tk.BooleanVar(value=False)
-        self.frontend_switch_button = tk.Button(root, text="NO",
+        self.frontend_switch_button = tk.Button(master, text="NO",
                                                 command=lambda: self.toggle_switch(switch_var=self.frontend_switch_var,
                                                                                    button=self.frontend_switch_button),
                                                 bg="grey", width=15, height=2)
@@ -49,7 +52,7 @@ class LanguageSelectionApp:
         self.backend_label.pack()
 
         self.backend_switch_var = tk.BooleanVar(value=False)
-        self.backend_switch_button = tk.Button(root, text="NO",
+        self.backend_switch_button = tk.Button(master, text="NO",
                                                command=lambda: self.toggle_switch(switch_var=self.backend_switch_var,
                                                                                   button=self.backend_switch_button),
                                                bg="grey", width=15, height=2)
@@ -60,7 +63,7 @@ class LanguageSelectionApp:
         self.data_analysis_label.pack()
 
         self.data_analysis_switch_var = tk.BooleanVar(value=False)
-        self.data_analysis_switch_button = tk.Button(root, text="NO",
+        self.data_analysis_switch_button = tk.Button(master, text="NO",
                                                      command=lambda: self.toggle_switch(
                                                          switch_var=self.data_analysis_switch_var,
                                                          button=self.data_analysis_switch_button),
@@ -71,7 +74,7 @@ class LanguageSelectionApp:
         self.availability_label = tk.Label(master, text="Availability:")
         self.availability_label.pack()
 
-        self.availability_slider = tk.Scale(root, from_=0, to=100, orient="horizontal", length=300)
+        self.availability_slider = tk.Scale(master, from_=0, to=100, orient="horizontal", length=300)
         self.availability_slider.set(50)
         self.availability_slider.pack()
 
@@ -79,7 +82,7 @@ class LanguageSelectionApp:
         self.security_mechanisms_label = tk.Label(master, text="Security Mechanisms:")
         self.security_mechanisms_label.pack()
 
-        self.security_mechanisms_slider = tk.Scale(root, from_=0, to=100, orient="horizontal", length=300)
+        self.security_mechanisms_slider = tk.Scale(master, from_=0, to=100, orient="horizontal", length=300)
         self.security_mechanisms_slider.set(50)
         self.security_mechanisms_slider.pack()
 
@@ -92,7 +95,7 @@ class LanguageSelectionApp:
                                        width=15, height=2)
         self.result_button.pack()
 
-        self.result_label = tk.Label(master, text="Result: -----", font=("Helvetica", 16), pady=10)
+        self.result_label = tk.Label(master, text="Result:", font=("Helvetica", 16), pady=10)
         self.result_label.pack()
 
         tk.Label(text="", pady=5).pack()  # break
@@ -107,11 +110,13 @@ class LanguageSelectionApp:
             switch_var.set(True)
 
     def get_predict(self, model_to_predict):
+        double_weight = 2
+
         new_case = pd.DataFrame(
             {
                 'Easy to program': [self.easy_slider.get() / 100],
-                "Frontend": [self.frontend_switch_var.get()],
-                "Backend": [self.backend_switch_var.get()],
+                "Frontend": [double_weight * self.frontend_switch_var.get()],
+                "Backend": [double_weight * self.backend_switch_var.get()],
                 "Data Analysis": [self.data_analysis_switch_var.get()],
                 "Availability": [self.availability_slider.get() / 100],
                 "Security Mechanisms": [self.security_mechanisms_slider.get() / 100],
