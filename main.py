@@ -3,11 +3,22 @@ import tkinter as tk
 from sklearn.ensemble import RandomForestClassifier
 
 
-class LanguageSelectionApp:
-    def __init__(self, master):
+def read_data():
+    data = pd.read_excel("./prog_lang_db.xlsx")
+    x_col = data.columns.drop('Programing language')
+    x = data[x_col]
+    y = data['Programing language']
+    return [x, y]
 
-        programing_language_data = self.read_data()
-        model = self.get_model(programing_language_data)
+
+def get_model(data):
+    random_forest_classifier_model = RandomForestClassifier()
+    random_forest_classifier_model.fit(data[0], data[1])
+    return random_forest_classifier_model
+
+
+class LanguageSelectionApp:
+    def __init__(self, master, model):
 
         # UI
         master.title("Choosing a Programming Language")
@@ -75,7 +86,9 @@ class LanguageSelectionApp:
         tk.Label(text="", pady=5).pack()  # break
 
         # RESULT
-        self.result_button = tk.Button(master, text="Result", command=lambda: self.get_predict(model), bg="grey",
+        self.result_button = tk.Button(master, text="Result",
+                                       command=lambda: self.get_predict(model_to_predict=model),
+                                       bg="grey",
                                        width=15, height=2)
         self.result_button.pack()
 
@@ -93,21 +106,7 @@ class LanguageSelectionApp:
             button.config(text="YES", bg="green")
             switch_var.set(True)
 
-    @staticmethod
-    def read_data():
-        data = pd.read_excel("./prog_lang_db.xlsx")
-        x_col = data.columns.drop('Programing language')
-        x = data[x_col]
-        y = data['Programing language']
-        return [x, y]
-
-    @staticmethod
-    def get_model(data):
-        model = RandomForestClassifier()
-        model.fit(data[0], data[1])
-        return model
-
-    def get_predict(self, model):
+    def get_predict(self, model_to_predict):
         new_case = pd.DataFrame(
             {
                 'Easy to program': [self.easy_slider.get() / 100],
@@ -117,13 +116,15 @@ class LanguageSelectionApp:
                 "Availability": [self.availability_slider.get() / 100],
                 "Security Mechanisms": [self.security_mechanisms_slider.get() / 100],
             })
-        predictions = model.predict(new_case)
+        predictions = model_to_predict.predict(new_case)
         self.result_label.config(text=f"Result: {predictions[0]}")
 
 
 if __name__ == '__main__':
+    programing_language_data = read_data()
+    fitted_model = get_model(programing_language_data)
 
     root = tk.Tk()
     root.geometry("400x600")
-    app = LanguageSelectionApp(root)
+    app = LanguageSelectionApp(master=root, model=fitted_model)
     root.mainloop()
