@@ -14,7 +14,9 @@ def read_data(in_test=False):
     return [x, y]
 
 
-def get_model(data):
+def get_model(data, preferred_language=None):
+    if preferred_language:
+        data[0].at[6, "Security Mechanisms"] = 31
     random_forest_classifier_model = RandomForestClassifier()
     random_forest_classifier_model.fit(data[0], data[1])
     return random_forest_classifier_model
@@ -25,42 +27,46 @@ class LanguageSelectionApp:
 
         # SET UI
         master.title("Choosing a Programming Language")
+        self.row = 0
+        pad_x = 15
 
-        tk.Label(text="", pady=5).pack()  # break
+        tk.Label(text="", pady=5).grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)  # break
 
         # Easy to program
         self.easy_label = tk.Label(master, text="Easy to program:")
-        self.easy_label.pack()
+        self.easy_label.grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)
 
         self.easy_slider = tk.Scale(master, from_=0, to=100, orient="horizontal", length=300)
         self.easy_slider.set(50)
-        self.easy_slider.pack()
+        self.easy_slider.grid(row=self.increment_and_return_row_number(), column=0, pady=3, columnspan=2, padx=pad_x)
 
         # Frontend
         self.frontend_label = tk.Label(master, text="Frontend:")
-        self.frontend_label.pack()
+        self.frontend_label.grid(row=self.increment_and_return_row_number(), column=0)
 
         self.frontend_switch_var = tk.BooleanVar(value=False)
         self.frontend_switch_button = tk.Button(master, text="NO",
                                                 command=lambda: self.toggle_switch(switch_var=self.frontend_switch_var,
                                                                                    button=self.frontend_switch_button),
                                                 bg="grey", width=15, height=2)
-        self.frontend_switch_button.pack(pady=10)
+        self.frontend_switch_button.grid(row=self.increment_and_return_row_number(), column=0)
 
         # Backend
         self.backend_label = tk.Label(master, text="Backend:")
-        self.backend_label.pack()
+        self.backend_label.grid(row=3, column=1)
 
         self.backend_switch_var = tk.BooleanVar(value=False)
         self.backend_switch_button = tk.Button(master, text="NO",
                                                command=lambda: self.toggle_switch(switch_var=self.backend_switch_var,
                                                                                   button=self.backend_switch_button),
                                                bg="grey", width=15, height=2)
-        self.backend_switch_button.pack(pady=10)
+        self.backend_switch_button.grid(row=4, column=1)
+
+        tk.Label(text="").grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)  # break
 
         # Data Analysis
         self.data_analysis_label = tk.Label(master, text="Data Analysis:")
-        self.data_analysis_label.pack()
+        self.data_analysis_label.grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)
 
         self.data_analysis_switch_var = tk.BooleanVar(value=False)
         self.data_analysis_switch_button = tk.Button(master, text="NO",
@@ -68,37 +74,39 @@ class LanguageSelectionApp:
                                                          switch_var=self.data_analysis_switch_var,
                                                          button=self.data_analysis_switch_button),
                                                      bg="grey", width=15, height=2)
-        self.data_analysis_switch_button.pack(pady=10)
+        self.data_analysis_switch_button.grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)
+
+        tk.Label(text="").grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)  # break
 
         # Availability
         self.availability_label = tk.Label(master, text="Availability:")
-        self.availability_label.pack()
+        self.availability_label.grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)
 
         self.availability_slider = tk.Scale(master, from_=0, to=100, orient="horizontal", length=300)
         self.availability_slider.set(50)
-        self.availability_slider.pack()
+        self.availability_slider.grid(row=self.increment_and_return_row_number(), column=0, pady=3, columnspan=2)
 
         # Security Mechanisms
         self.security_mechanisms_label = tk.Label(master, text="Security Mechanisms:")
-        self.security_mechanisms_label.pack()
+        self.security_mechanisms_label.grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)
 
         self.security_mechanisms_slider = tk.Scale(master, from_=0, to=100, orient="horizontal", length=300)
         self.security_mechanisms_slider.set(50)
-        self.security_mechanisms_slider.pack()
+        self.security_mechanisms_slider.grid(row=self.increment_and_return_row_number(), column=0, pady=3, columnspan=2)
 
-        tk.Label(text="", pady=5).pack()  # break
+        tk.Label(text="", pady=5).grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)  # break
 
         # RESULT
         self.result_button = tk.Button(master, text="Result",
                                        command=lambda: self.get_predict(model_to_predict=model),
                                        bg="grey",
                                        width=15, height=2)
-        self.result_button.pack()
+        self.result_button.grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)
 
         self.result_label = tk.Label(master, text="Result:", font=("Helvetica", 16), pady=10)
-        self.result_label.pack()
+        self.result_label.grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)
 
-        tk.Label(text="", pady=5).pack()  # break
+        tk.Label(text="", pady=5).grid(row=self.increment_and_return_row_number(), column=0, columnspan=2)  # break
 
     @staticmethod
     def toggle_switch(switch_var, button):
@@ -108,6 +116,11 @@ class LanguageSelectionApp:
         else:
             button.config(text="YES", bg="green")
             switch_var.set(True)
+
+    def increment_and_return_row_number(self):
+        row = self.row
+        self.row += 1
+        return row
 
     def get_predict(self, model_to_predict):
         double_weight = 2
@@ -130,6 +143,7 @@ if __name__ == '__main__':
     fitted_model = get_model(programing_language_data)
 
     root = tk.Tk()
-    root.geometry("400x600")
+    # root.geometry("400x600")  # hardcoded scale
+    root.grid_propagate(True)  # add autoscale
     app = LanguageSelectionApp(master=root, model=fitted_model)
     root.mainloop()
