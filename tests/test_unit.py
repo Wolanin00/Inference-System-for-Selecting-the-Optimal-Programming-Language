@@ -5,7 +5,7 @@ from main import LanguageSelectionApp, read_data, get_model
 
 class TestMyApp(unittest.TestCase):
     def setUp(self):
-        data = read_data(in_test=True)
+        data = read_data()
         self.data = data
         model = get_model(data)
         self.model = model

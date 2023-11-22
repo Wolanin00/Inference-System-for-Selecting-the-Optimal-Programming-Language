@@ -1,13 +1,16 @@
+import os
 import pandas as pd
 import tkinter as tk
 from sklearn.svm import SVC
 
 
-def read_data(in_test=False):
-    if in_test:
-        data = pd.read_excel("../prog_lang_db.xlsx", decimal=",")
-    else:
-        data = pd.read_excel("./prog_lang_db.xlsx", decimal=",")
+def read_data():
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    file_name = "prog_lang_db.xlsx"
+    file_path = os.path.join(script_directory, file_name)
+
+    data = pd.read_excel(file_path, decimal=",")
+
     x_col = data.columns.drop('Programing language')
     x = data[x_col]
     y = data['Programing language']
