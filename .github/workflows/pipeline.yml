@@ -24,7 +24,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install black
 
-      - name: Run Black
+      - name: Configure Git user identity
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+
+      - name: Run Black and Commit
         run: |
           black .
           git add .
