@@ -10,13 +10,8 @@ class TestMyApp(unittest.TestCase):
         self.data = data
         model = get_model(data)
         self.model = model
-        if os.environ.get('DISPLAY', '') == '':
-            self.root = tk.Tk()
-            self.app = LanguageSelectionApp(master=self.root, model=model)
-        else:
-            self.root = None
-            self.app = None
-
+        self.root = tk.Tk()
+        self.app = LanguageSelectionApp(master=self.root, model=model)
 
     def test_01_title(self):
         expected_title = "Choosing a Programming Language"
