@@ -1,4 +1,3 @@
-import os
 import unittest
 import tkinter as tk
 from main import LanguageSelectionApp, read_data, get_model
