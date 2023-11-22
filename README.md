@@ -2,6 +2,17 @@
 
 Project for completing the course "Intelligent reasoning systems"
 
+## Installation
+Create conda env with Python 3.9 version -> `conda create --name my_env python=3.9`
+
+Activate conda env -> `conda activate my_env`
+
+Install all below dependencies `pip install <package-name>`:
+- `pandas` (I used 2.1.3 version)
+- `scikit-learn` (I used 1.3.2 version)
+
+Go to root folder and run `main.py` file -> `python main.py`
+
 
 ## Release 1 (19.11.2023)
 ### UI:
