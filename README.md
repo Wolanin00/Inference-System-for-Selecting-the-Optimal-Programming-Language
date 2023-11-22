@@ -13,6 +13,8 @@ Install all below dependencies `pip install <package-name>`:
 
 Go to root folder and run `main.py` file -> `python main.py`
 
+## Tests
+To run tests go to main folder and run command -> `pytest tests/test_unit.py`
 
 ## Release 1 (19.11.2023)
 ### UI:
