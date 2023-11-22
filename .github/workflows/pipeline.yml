@@ -44,7 +44,7 @@ jobs:
             echo "Skipping push for branch $GITHUB_REF"
           fi
         env:
-          MY_TOKEN_1: ${{ secrets.MY_TOKEN_1 }}
+          GITHUB_TOKEN : ${{ secrets.MY_TOKEN_1 }}
 
   run-tests:
     runs-on: ubuntu-latest
