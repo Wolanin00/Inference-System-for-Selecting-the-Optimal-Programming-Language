@@ -1,3 +1,4 @@
+import os
 import unittest
 import tkinter as tk
 from main import LanguageSelectionApp, read_data, get_model
@@ -9,8 +10,10 @@ class TestMyApp(unittest.TestCase):
         self.data = data
         model = get_model(data)
         self.model = model
-        self.root = tk.Tk()
-        self.root.geometry("400x600")
+        if os.environ.get('DISPLAY', '') == '':
+            self.root = tk.Tk()
+        else:
+            self.root = None
         self.app = LanguageSelectionApp(master=self.root, model=model)
 
     def test_01_title(self):

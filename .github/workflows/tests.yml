@@ -22,5 +22,6 @@ jobs:
 
     - name: Run tests
       run: |
+        sudo apt-get install xvfb
         python -m pip install pytest
-        pytest
+        xvfb-run pytest
