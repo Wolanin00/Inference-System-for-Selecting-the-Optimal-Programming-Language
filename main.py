@@ -1,13 +1,13 @@
 import pandas as pd
 import tkinter as tk
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 
 
 def read_data(in_test=False):
     if in_test:
-        data = pd.read_excel("../prog_lang_db.xlsx")
+        data = pd.read_excel("../prog_lang_db.xlsx", decimal=",")
     else:
-        data = pd.read_excel("./prog_lang_db.xlsx")
+        data = pd.read_excel("./prog_lang_db.xlsx", decimal=",")
     x_col = data.columns.drop('Programing language')
     x = data[x_col]
     y = data['Programing language']
@@ -16,16 +16,15 @@ def read_data(in_test=False):
 
 def get_model(data, preferred_language=None):
     if preferred_language:
-        preferred_language_index = data[1][data[1] == preferred_language].index[0]
-        sample_weights = [1.0]*len(data[1])
-        sample_weights[preferred_language_index] = 2.0
+        sample_weights = {class_label: 1.0 for class_label in data[1].unique()}
+        sample_weights[preferred_language] = 2.0
 
-        random_forest_classifier_model = RandomForestClassifier(random_state=42)
-        random_forest_classifier_model.fit(data[0], data[1], sample_weight=sample_weights)
+        svm_model = SVC(class_weight=sample_weights)
+        svm_model.fit(data[0], data[1])
     else:
-        random_forest_classifier_model = RandomForestClassifier(random_state=42)
-        random_forest_classifier_model.fit(data[0], data[1])
-    return random_forest_classifier_model
+        svm_model = SVC()
+        svm_model.fit(data[0], data[1])
+    return svm_model
 
 
 class LanguageSelectionApp:
@@ -138,6 +137,9 @@ class LanguageSelectionApp:
     def update_model_about_preferred_lang(self, selected_option):
         if selected_option != "None":
             new_model = get_model(data=read_data(), preferred_language=selected_option)
+            self.model = new_model
+        else:
+            new_model = get_model(data=read_data())
             self.model = new_model
 
     def increment_and_return_row_number(self):
