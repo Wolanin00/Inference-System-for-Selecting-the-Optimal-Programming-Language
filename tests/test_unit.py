@@ -22,19 +22,30 @@ class TestMyApp(unittest.TestCase):
         self.assertEqual(self.app.easy_label.cget("text"), expected_easy_label_text)
 
         expected_frontend_label_text = "Frontend:"
-        self.assertEqual(self.app.frontend_label.cget("text"), expected_frontend_label_text)
+        self.assertEqual(
+            self.app.frontend_label.cget("text"), expected_frontend_label_text
+        )
 
         expected_backend_label_text = "Backend:"
-        self.assertEqual(self.app.backend_label.cget("text"), expected_backend_label_text)
+        self.assertEqual(
+            self.app.backend_label.cget("text"), expected_backend_label_text
+        )
 
         expected_data_label_text = "Data Analysis:"
-        self.assertEqual(self.app.data_analysis_label.cget("text"), expected_data_label_text)
+        self.assertEqual(
+            self.app.data_analysis_label.cget("text"), expected_data_label_text
+        )
 
         expected_availability_label_text = "Availability:"
-        self.assertEqual(self.app.availability_label.cget("text"), expected_availability_label_text)
+        self.assertEqual(
+            self.app.availability_label.cget("text"), expected_availability_label_text
+        )
 
         expected_security_label_text = "Security Mechanisms:"
-        self.assertEqual(self.app.security_mechanisms_label.cget("text"), expected_security_label_text)
+        self.assertEqual(
+            self.app.security_mechanisms_label.cget("text"),
+            expected_security_label_text,
+        )
 
         expected_result_label_text = "Result:"
         self.assertEqual(self.app.result_label.cget("text"), expected_result_label_text)
@@ -52,7 +63,9 @@ class TestMyApp(unittest.TestCase):
         self.assertEqual(self.app.backend_switch_var.get(), backend_bool_value)
         self.assertEqual(self.app.data_analysis_switch_var.get(), data_analysis_value)
         self.assertEqual(self.app.availability_slider.get(), availability_value)
-        self.assertEqual(self.app.security_mechanisms_slider.get(), security_mechanisms_value)
+        self.assertEqual(
+            self.app.security_mechanisms_slider.get(), security_mechanisms_value
+        )
 
     def test_10_predict_01(self):
         self.app.result_button.invoke()
@@ -73,12 +86,16 @@ class TestMyApp(unittest.TestCase):
 
         all_columns = list(self.data[0].columns)
 
-        self.app.easy_slider.set(python_value[all_columns[0]].values[0]*scale)
+        self.app.easy_slider.set(python_value[all_columns[0]].values[0] * scale)
         self.app.frontend_switch_var.set(int(python_value[all_columns[1]].values[0]))
         self.app.backend_switch_var.set(int(python_value[all_columns[2]].values[0]))
-        self.app.data_analysis_switch_var.set(int(python_value[all_columns[3]].values[0]))
-        self.app.availability_slider.set(python_value[all_columns[4]].values[0]*scale)
-        self.app.security_mechanisms_slider.set(python_value[all_columns[5]].values[0]*scale)
+        self.app.data_analysis_switch_var.set(
+            int(python_value[all_columns[3]].values[0])
+        )
+        self.app.availability_slider.set(python_value[all_columns[4]].values[0] * scale)
+        self.app.security_mechanisms_slider.set(
+            python_value[all_columns[5]].values[0] * scale
+        )
 
         self.app.result_button.invoke()
         result_text = self.app.result_label.cget("text")
