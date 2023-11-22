@@ -91,7 +91,7 @@ class LanguageSelectionApp:
         self.frontend_switch_var = tk.BooleanVar(value=False)
         self.frontend_switch_button = tk.Button(
             master,
-            text="NO",
+            text='NO',
             command=lambda: self.toggle_switch(
                 switch_var=self.frontend_switch_var, button=self.frontend_switch_button
             ),
