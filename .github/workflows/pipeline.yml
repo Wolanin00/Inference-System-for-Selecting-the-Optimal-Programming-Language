@@ -25,7 +25,17 @@ jobs:
           pip install black
 
       - name: Run Black
-        run: black .
+        run: |
+          black .
+          git add .
+          git commit -m "Auto-format code with black" || true  # Continue even if there are no changes
+
+          # Determine the branch and push accordingly
+          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+            git push origin main
+          elif [[ "$GITHUB_REF" == "refs/heads/dev" ]]; then
+            git push origin dev
+          fi
 
   run-tests:
     runs-on: ubuntu-latest
