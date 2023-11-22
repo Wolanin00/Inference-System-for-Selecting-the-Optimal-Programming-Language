@@ -40,7 +40,11 @@ jobs:
             git push origin main
           elif [[ "$GITHUB_REF" == "refs/heads/dev" ]]; then
             git push origin dev
+          else
+            echo "Skipping push for branch $GITHUB_REF"
           fi
+        env:
+          MY_TOKEN: ${{ secrets.MY_TOKEN }}
 
   run-tests:
     runs-on: ubuntu-latest
