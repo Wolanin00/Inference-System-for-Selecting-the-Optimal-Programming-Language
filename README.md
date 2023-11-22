@@ -5,7 +5,7 @@ Project for completing the course "Intelligent reasoning systems"
 
 ## Release 1 (19.11.2023)
 ### UI:
-<img src="./static/scn/Release_1_UI.jpg" alt="Screenshot"/>
+<img src="./static/scn/Release_1_UI.jpg" alt="Screenshot" style="border: 1px solid #000;"/>
 
 ### Features:
 - User can set "Easy to program" slider from 0 to 100,
