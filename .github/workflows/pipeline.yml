@@ -39,6 +39,7 @@ jobs:
           
           git push origin main
           
+          
 #          # Determine the branch and push accordingly
 #          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
 #            git push origin main
