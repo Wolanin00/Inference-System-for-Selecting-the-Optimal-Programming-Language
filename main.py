@@ -85,7 +85,7 @@ class LanguageSelectionApp:
         self.frontend_label = tk.Label(master, text="Frontend:")
         self.frontend_label.grid(row=self.row, column=0)
 
-        self.backend_label = tk.Label(master, text='Backend:')
+        self.backend_label = tk.Label(master, text="Backend:")
         self.backend_label.grid(row=self.increment_and_return_row_number(), column=1)
 
         self.frontend_switch_var = tk.BooleanVar(value=False)
