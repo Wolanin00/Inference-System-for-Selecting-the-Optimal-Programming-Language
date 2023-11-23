@@ -29,15 +29,6 @@ jobs:
           git config --global user.email "szewczykmateusz64@gmail.com"
           git config --global user.name "Mateusz Szewczyk"
 
-      - name: Use GitHub Token
-        run: echo ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Use GitHub Token
-        run: echo ${{ secrets.MY_TOKEN_1 }}
-
-      - name: Use GitHub Token
-        run: echo ${{ secrets.PAT_TOKEN }}
-
       - name: Run Black and Commit
         run: |
           black .
