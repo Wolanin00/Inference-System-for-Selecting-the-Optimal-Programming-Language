@@ -26,25 +26,28 @@ jobs:
 
       - name: Configure Git user identity
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "szewczykmateusz64@gmail.com"
+          git config --global user.name "Mateusz Szewczyk"
 
       - name: Run Black and Commit
         run: |
           black .
           git add .
-          git commit -m "Auto-format code with black" || true  # Continue even if there are no changes
-
-          # Determine the branch and push accordingly
-          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
-            git push origin main
-          elif [[ "$GITHUB_REF" == "refs/heads/dev" ]]; then
-            git push origin dev
-          else
-            echo "Skipping push for branch $GITHUB_REF"
-          fi
-        env:
-          GITHUB_TOKEN : ${{ secrets.MY_TOKEN_1 }}
+          git commit -m "Auto-format code with black"
+          git log -n 1
+          
+          git push origin main
+          
+#          # Determine the branch and push accordingly
+#          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+#            git push origin main
+#          elif [[ "$GITHUB_REF" == "refs/heads/dev" ]]; then
+#            git push origin dev
+#          else
+#            echo "Skipping push for branch $GITHUB_REF"
+#          fi
+#        env:
+#          GITHUB_TOKEN : ${{ secrets.MY_TOKEN_1 }}
 
   run-tests:
     runs-on: ubuntu-latest
