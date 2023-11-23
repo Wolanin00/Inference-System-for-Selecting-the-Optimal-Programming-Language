@@ -28,13 +28,22 @@ jobs:
         run: |
           git config --global user.email "szewczykmateusz64@gmail.com"
           git config --global user.name "Mateusz Szewczyk"
-          git remote set-url origin "https://$GITHUB_ACTOR:PAT_TOKEN@github.com/Wolanin00/Inference-System-for-Selecting-the-Optimal-Programming-Language.git"
+
+      - name: Use GitHub Token
+        run: echo ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use GitHub Token
+        run: echo ${{ secrets.MY_TOKEN_1 }}
+
+      - name: Use GitHub Token
+        run: echo ${{ secrets.PAT_TOKEN }}
 
       - name: Run Black and Commit
         run: |
           black .
           git add .
-          git commit -m "Auto-format code with black"
+          git status
+          git commit -m "Auto-commit changes" || true  # Continue even if there are no changes
           git log -n 1
           
           git push origin main
