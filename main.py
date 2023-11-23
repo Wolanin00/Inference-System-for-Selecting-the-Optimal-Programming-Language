@@ -95,7 +95,7 @@ class LanguageSelectionApp:
             command=lambda: self.toggle_switch(
                 switch_var=self.frontend_switch_var, button=self.frontend_switch_button
             ),
-            bg='grey',
+            bg="grey",
             width=15,
             height=2,
         )
