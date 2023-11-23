@@ -121,7 +121,7 @@ class LanguageSelectionApp:
         )  # break
 
         # Data Analysis
-        self.data_analysis_label = tk.Label(master, text="Data Analysis:")
+        self.data_analysis_label = tk.Label(master, text='Data Analysis:')
         self.data_analysis_label.grid(
             row=self.increment_and_return_row_number(), column=0, columnspan=2
         )
