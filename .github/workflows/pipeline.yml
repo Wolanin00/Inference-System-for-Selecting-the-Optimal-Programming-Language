@@ -114,9 +114,13 @@ jobs:
           make clean
           make html
 
+      - name: Print contents of _build/html directory
+        run: ls docs/_build/html
+
       - name: Switch to gh-pages branch and copy files
         run: |
           git checkout -f gh-pages
+          ls
           pwd
           mv _build/html ../.
 #          cd ../../../.
