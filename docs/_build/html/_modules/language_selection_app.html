@@ -193,7 +193,8 @@
           <h1>Source code for language_selection_app</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">read_data</span><span class="p">,</span> <span class="n">get_model</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">font</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">get_prepared_data</span><span class="p">,</span> <span class="n">get_model</span><span class="p">,</span> <span class="n">get_all_programming_languages</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
 
@@ -208,7 +209,7 @@
 
 <span class="sd">    .. code-block:: python</span>
 
-<span class="sd">        programing_language_data = read_data()</span>
+<span class="sd">        programing_language_data = prepare_data()</span>
 <span class="sd">        fitted_model = get_model(programing_language_data)</span>
 
 <span class="sd">        root = tk.Tk()</span>
@@ -227,10 +228,11 @@
         <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
             <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
         <span class="p">)</span>  <span class="c1"># break</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">preferred_lang</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Preferred Language:&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preferred_lang</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-        <span class="n">options</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">get_all_programming_languages</span><span class="p">()</span>
         <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
         <span class="n">selected_option</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="n">master</span><span class="p">)</span>
         <span class="n">selected_option</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
@@ -249,23 +251,32 @@
             <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
         <span class="p">)</span>  <span class="c1"># break</span>
 
-        <span class="c1"># Easy to program</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">easy_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Easy to program:&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">easy_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
-            <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+            <span class="n">master</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Frontend and Backend importance:&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance_switch_var_switch_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">BooleanVar</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance_switch_var_switch_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="n">master</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;NO&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">toggle_switch</span><span class="p">(</span>
+                <span class="n">switch_var</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance_switch_var_switch_var</span><span class="p">,</span>
+                <span class="n">button</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance_switch_var_switch_button</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">bg</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance_switch_var_switch_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span>
         <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">easy_slider</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span>
-            <span class="n">master</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">300</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">easy_slider</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">easy_slider</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
-            <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span>
-            <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">pady</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-            <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-            <span class="n">padx</span><span class="o">=</span><span class="n">pad_x</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span>  <span class="c1"># break</span>
 
         <span class="c1"># Frontend and Backend</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frontend_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Frontend:&quot;</span><span class="p">)</span>
@@ -302,7 +313,33 @@
             <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span>
         <span class="p">)</span>
 
-        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span>  <span class="c1"># break</span>
+
+        <span class="c1"># Easy to program</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">easy_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Easy to program:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">easy_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">easy_slider</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span>
+            <span class="n">master</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">300</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">easy_slider</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">easy_slider</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span>
+            <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">pady</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">padx</span><span class="o">=</span><span class="n">pad_x</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
             <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
         <span class="p">)</span>  <span class="c1"># break</span>
 
@@ -328,7 +365,9 @@
             <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
         <span class="p">)</span>
 
-        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
             <span class="n">row</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">increment_and_return_row_number</span><span class="p">(),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span>
         <span class="p">)</span>  <span class="c1"># break</span>
 
@@ -368,7 +407,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">result_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
             <span class="n">master</span><span class="p">,</span>
             <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Result&quot;</span><span class="p">,</span>
-            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_predict</span><span class="p">(</span><span class="n">model_to_predict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update_model_about_preferred_lang</span><span class="p">(</span>
+                    <span class="n">selected_option</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">preferred_lang_button</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_predict</span><span class="p">(</span><span class="n">model_to_predict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span>
+            <span class="p">),</span>
             <span class="n">bg</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
             <span class="n">width</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
             <span class="n">height</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
@@ -425,11 +469,22 @@
 <span class="sd">            `None`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">selected_option</span> <span class="o">!=</span> <span class="s2">&quot;None&quot;</span><span class="p">:</span>
-            <span class="n">new_model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">read_data</span><span class="p">(),</span> <span class="n">preferred_language</span><span class="o">=</span><span class="n">selected_option</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">new_model</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">get_prepared_data</span><span class="p">(</span>
+                    <span class="n">is_frontend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frontend_switch_var</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                    <span class="n">is_backend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backend_switch_var</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                    <span class="n">increase_frontend_and_backend_importance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance_switch_var_switch_var</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="p">),</span>
+                <span class="n">preferred_language</span><span class="o">=</span><span class="n">selected_option</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">new_model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">read_data</span><span class="p">())</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">new_model</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">get_prepared_data</span><span class="p">(</span>
+                    <span class="n">is_frontend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frontend_switch_var</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                    <span class="n">is_backend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backend_switch_var</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                    <span class="n">increase_frontend_and_backend_importance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frontend_and_backend_importance_switch_var_switch_var</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="p">)</span>
+            <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LanguageSelectionApp.increment_and_return_row_number">
@@ -452,7 +507,7 @@
 <a class="viewcode-back" href="../language_selection_app.html#language_selection_app.LanguageSelectionApp.get_predict">[docs]</a>
     <span class="k">def</span> <span class="nf">get_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_to_predict</span><span class="p">:</span> <span class="n">SVC</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get predicted programing language</span>
+<span class="sd">        Get predicted programing language.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model_to_predict (SVC):</span>

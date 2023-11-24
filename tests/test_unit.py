@@ -1,12 +1,12 @@
 import unittest
 import tkinter as tk
 from language_selection_app import LanguageSelectionApp
-from utils import read_data, get_model
+from utils import get_prepared_data, get_model
 
 
 class TestMyApp(unittest.TestCase):
     def setUp(self):
-        data = read_data()
+        data = get_prepared_data()
         self.data = data
         model = get_model(data)
         self.model = model

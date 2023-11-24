@@ -195,6 +195,20 @@
           <section id="module-utils">
 <span id="utils"></span><h1>Utils<a class="headerlink" href="#module-utils" title="Link to this heading">#</a></h1>
 <dl class="py function">
+<dt class="sig sig-object py" id="utils.get_all_programming_languages">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_all_programming_languages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/utils.html#get_all_programming_languages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.get_all_programming_languages" title="Link to this definition">#</a></dt>
+<dd><p>Function to get all programming languages</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>all programming languages</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>data (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="utils.get_model">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preferred_language</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SVC</span></span></span><a class="reference internal" href="_modules/utils.html#get_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.get_model" title="Link to this definition">#</a></dt>
 <dd><p>Get fitted model.</p>
@@ -215,15 +229,31 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="utils.read_data">
-<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/utils.html#read_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.read_data" title="Link to this definition">#</a></dt>
-<dd><p>Read prepared data from <cite>prog_lang_db.xlsx</cite> file.</p>
+<dt class="sig sig-object py" id="utils.get_prepared_data">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_prepared_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_frontend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">increase_frontend_and_backend_importance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/utils.html#get_prepared_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.get_prepared_data" title="Link to this definition">#</a></dt>
+<dd><p>Prepare data for frontend and backend languages.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of X and Y data.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>increase_frontend_and_backend_importance</strong> (<em>bool</em>) – increase weight of frontend and backend importance for predict</p></li>
+<li><p><strong>language</strong> (<em>programming</em>) – </p></li>
+<li><p><strong>is_frontend</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>is_backend</strong> (<em>bool</em>) – </p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>list</p>
+<dd class="field-even"><p>data (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.read_data">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/utils.html#read_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.read_data" title="Link to this definition">#</a></dt>
+<dd><p>Read prepared data from <cite>prog_lang_db.xlsx</cite> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>data (pd.DataFrame)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -278,7 +308,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Utils</a><ul>
+<li><a class="reference internal" href="#utils.get_all_programming_languages"><code class="docutils literal notranslate"><span class="pre">get_all_programming_languages()</span></code></a></li>
 <li><a class="reference internal" href="#utils.get_model"><code class="docutils literal notranslate"><span class="pre">get_model()</span></code></a></li>
+<li><a class="reference internal" href="#utils.get_prepared_data"><code class="docutils literal notranslate"><span class="pre">get_prepared_data()</span></code></a></li>
 <li><a class="reference internal" href="#utils.read_data"><code class="docutils literal notranslate"><span class="pre">read_data()</span></code></a></li>
 </ul>
 </li>

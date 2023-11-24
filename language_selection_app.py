@@ -1,6 +1,7 @@
 import pandas as pd
 import tkinter as tk
-from utils import read_data, get_model
+from tkinter import font
+from utils import get_prepared_data, get_model, get_all_programming_languages
 from typing import Union
 from sklearn.svm import SVC
 
@@ -13,7 +14,7 @@ class LanguageSelectionApp:
 
     .. code-block:: python
 
-        programing_language_data = read_data()
+        programing_language_data = prepare_data()
         fitted_model = get_model(programing_language_data)
 
         root = tk.Tk()
@@ -32,10 +33,11 @@ class LanguageSelectionApp:
         tk.Label(text="", pady=5).grid(
             row=self.increment_and_return_row_number(), column=0, columnspan=2
         )  # break
+
         self.preferred_lang = tk.Label(master, text="Preferred Language:")
         self.preferred_lang.grid(row=self.row, column=0)
 
-        options = list(self.model.classes_)
+        options = get_all_programming_languages()
         options.append("None")
         selected_option = tk.StringVar(master)
         selected_option.set("None")
@@ -54,23 +56,32 @@ class LanguageSelectionApp:
             row=self.increment_and_return_row_number(), column=0, columnspan=2
         )  # break
 
-        # Easy to program
-        self.easy_label = tk.Label(master, text="Easy to program:")
-        self.easy_label.grid(
-            row=self.increment_and_return_row_number(), column=0, columnspan=2
+        self.frontend_and_backend_importance = tk.Label(
+            master, text="Frontend and Backend importance:"
+        )
+        self.frontend_and_backend_importance.grid(row=self.row, column=0)
+
+        self.frontend_and_backend_importance_switch_var_switch_var = tk.BooleanVar(
+            value=False
+        )
+        self.frontend_and_backend_importance_switch_var_switch_button = tk.Button(
+            master,
+            text="NO",
+            command=lambda: self.toggle_switch(
+                switch_var=self.frontend_and_backend_importance_switch_var_switch_var,
+                button=self.frontend_and_backend_importance_switch_var_switch_button,
+            ),
+            bg="grey",
+            width=15,
+            height=2,
+        )
+        self.frontend_and_backend_importance_switch_var_switch_button.grid(
+            row=self.increment_and_return_row_number(), column=1
         )
 
-        self.easy_slider = tk.Scale(
-            master, from_=0, to=100, orient="horizontal", length=300
-        )
-        self.easy_slider.set(50)
-        self.easy_slider.grid(
-            row=self.increment_and_return_row_number(),
-            column=0,
-            pady=3,
-            columnspan=2,
-            padx=pad_x,
-        )
+        tk.Label(text="", pady=5).grid(
+            row=self.increment_and_return_row_number(), column=0, columnspan=2
+        )  # break
 
         # Frontend and Backend
         self.frontend_label = tk.Label(master, text="Frontend:")
@@ -107,7 +118,33 @@ class LanguageSelectionApp:
             row=self.increment_and_return_row_number(), column=1
         )
 
-        tk.Label(text="").grid(
+        tk.Label(
+            text="", font=font.Font(family="Helvetica", size=2, weight="bold")
+        ).grid(
+            row=self.increment_and_return_row_number(), column=0, columnspan=2
+        )  # break
+
+        # Easy to program
+        self.easy_label = tk.Label(master, text="Easy to program:")
+        self.easy_label.grid(
+            row=self.increment_and_return_row_number(), column=0, columnspan=2
+        )
+
+        self.easy_slider = tk.Scale(
+            master, from_=0, to=100, orient="horizontal", length=300
+        )
+        self.easy_slider.set(50)
+        self.easy_slider.grid(
+            row=self.increment_and_return_row_number(),
+            column=0,
+            pady=3,
+            columnspan=2,
+            padx=pad_x,
+        )
+
+        tk.Label(
+            text="", font=font.Font(family="Helvetica", size=2, weight="bold")
+        ).grid(
             row=self.increment_and_return_row_number(), column=0, columnspan=2
         )  # break
 
@@ -133,7 +170,9 @@ class LanguageSelectionApp:
             row=self.increment_and_return_row_number(), column=0, columnspan=2
         )
 
-        tk.Label(text="").grid(
+        tk.Label(
+            text="", font=font.Font(family="Helvetica", size=2, weight="bold")
+        ).grid(
             row=self.increment_and_return_row_number(), column=0, columnspan=2
         )  # break
 
@@ -173,7 +212,12 @@ class LanguageSelectionApp:
         self.result_button = tk.Button(
             master,
             text="Result",
-            command=lambda: self.get_predict(model_to_predict=self.model),
+            command=lambda: (
+                self.update_model_about_preferred_lang(
+                    selected_option=self.preferred_lang_button.cget("text")
+                ),
+                self.get_predict(model_to_predict=self.model),
+            ),
             bg="grey",
             width=15,
             height=2,
@@ -225,9 +269,22 @@ class LanguageSelectionApp:
             `None`
         """
         if selected_option != "None":
-            self.model = get_model(data=read_data(), preferred_language=selected_option)
+            self.model = get_model(
+                data=get_prepared_data(
+                    is_frontend=self.frontend_switch_var.get(),
+                    is_backend=self.backend_switch_var.get(),
+                    increase_frontend_and_backend_importance=self.frontend_and_backend_importance_switch_var_switch_var.get(),
+                ),
+                preferred_language=selected_option,
+            )
         else:
-            self.model = get_model(data=read_data())
+            self.model = get_model(
+                data=get_prepared_data(
+                    is_frontend=self.frontend_switch_var.get(),
+                    is_backend=self.backend_switch_var.get(),
+                    increase_frontend_and_backend_importance=self.frontend_and_backend_importance_switch_var_switch_var.get(),
+                )
+            )
 
     def increment_and_return_row_number(self) -> int:
         """
