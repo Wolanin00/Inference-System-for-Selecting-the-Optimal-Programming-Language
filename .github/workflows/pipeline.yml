@@ -123,7 +123,7 @@ jobs:
           tree
           git checkout main docs/_build/html/*
           tree
-          mv Inference-System-for-Selecting-the-Optimal-Programming-Language/docs/_build/html/* .
+          mv docs/_build/html/* .
           git checkout -f gh-pages
           tree          
 
