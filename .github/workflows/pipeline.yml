@@ -102,6 +102,7 @@ jobs:
           done
           git add . 
           git commit -m "deleting old ghp"
+          git push -u origin gh-pages
           git remote set-branches --add origin main
           git fetch origin main:main
           git checkout main
