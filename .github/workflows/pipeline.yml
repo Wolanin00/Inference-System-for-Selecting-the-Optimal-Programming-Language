@@ -117,6 +117,7 @@ jobs:
       - name: Switch to gh-pages branch and copy files
         run: |
           git checkout -f gh-pages
+          pwd
           mv _build/html ../../../.
           cd ../../../.
           rm -rf python
