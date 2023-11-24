@@ -118,15 +118,18 @@ jobs:
         run: ls docs/_build/html
 
       - name: Checkout gh-pages branch
-        run: git checkout -f gh-pages
-
-      - name: Copy HTML files
         run: |
-          pwd
+          git checkout -f gh-pages
+          git checkout main docs/_build/html/*
           ls
-          rm -rf *
-          mv docs/_build/html/* .
-          ls
+
+#      - name: Copy HTML files
+#        run: |
+#          pwd
+#          ls
+#          rm -rf *
+#          mv docs/_build/html/* .
+#          ls
 
 #      - name: Switch to gh-pages branch and copy files
 #        run: |
