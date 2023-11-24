@@ -118,12 +118,12 @@ jobs:
         run: |
           git checkout -f gh-pages
           pwd
-          mv _build/html ../../../.
-          cd ../../../.
-          rm -rf python
-          mv html/* .
-          rm -rf html
-          git add .
-          git commit -m "generating gh-pages docs `date +'%Y-%m-%d'`"
-          ls -lA
-          git push -u origin gh-pages
+          mv _build/html ../.
+#          cd ../../../.
+#          rm -rf python
+#          mv html/* .
+#          rm -rf html
+#          git add .
+#          git commit -m "generating gh-pages docs `date +'%Y-%m-%d'`"
+#          ls -lA
+#          git push -u origin gh-pages
