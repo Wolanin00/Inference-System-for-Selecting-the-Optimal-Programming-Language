@@ -2,6 +2,9 @@
 
 Project for completing the course "Intelligent reasoning systems"
 
+## Documentation
+<a href="https://wolanin00.github.io/Inference-System-for-Selecting-the-Optimal-Programming-Language/index.html" target="_blank">Inference System for Selecting the Optimal Programming Language’s documentation</a>
+
 ## Installation
 Create conda env with Python 3.9 version -> `conda create --name my_env python=3.9`
 
