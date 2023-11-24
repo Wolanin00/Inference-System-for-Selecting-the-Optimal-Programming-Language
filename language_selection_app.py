@@ -212,7 +212,7 @@ class LanguageSelectionApp:
             switch_var.set(True)
 
     def update_model_about_preferred_lang(
-        self, selected_option: tk.StringVar | None
+        self, selected_option: str | None
     ) -> None:
         """
         Update model about preferred lang
