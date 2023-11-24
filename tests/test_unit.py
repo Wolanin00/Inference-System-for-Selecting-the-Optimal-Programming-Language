@@ -1,6 +1,7 @@
 import unittest
 import tkinter as tk
-from main import LanguageSelectionApp, read_data, get_model
+from language_selection_app import LanguageSelectionApp
+from utils import read_data, get_model
 
 
 class TestMyApp(unittest.TestCase):
