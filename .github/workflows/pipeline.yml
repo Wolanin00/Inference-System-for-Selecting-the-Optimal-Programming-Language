@@ -90,7 +90,6 @@ jobs:
 
       - name: Build Sphinx documentation
         run: |
-          git checkout main
           cd docs
           make clean & make html
 
