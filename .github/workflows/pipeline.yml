@@ -117,7 +117,12 @@ jobs:
       - name: Switch to gh-pages branch and copy files
         run: |
           git checkout -f gh-pages
-          cp -r docs/_build/html/* .
+          mv _build/html ../../../.
+          cd ../../../.
+          rm -rf python
+          mv html/* .
+          rm -rf html
           git add .
-          git commit -m "Update documentation"
-          git push origin gh-pages
+          git commit -m "generating gh-pages docs `date +'%Y-%m-%d'`"
+          ls -lA
+          git push -u origin gh-pages
