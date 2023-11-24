@@ -90,6 +90,8 @@ jobs:
 
       - name: Test creating
         run: |
+          git config --global user.email "szewczykmateusz64@gmail.com"
+          git config --global user.name "Mateusz Szewczyk"
           pwd
           git remote set-branches --add origin gh-pages
           git fetch origin gh-pages:gh-pages
