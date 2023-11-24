@@ -102,12 +102,10 @@ jobs:
           done
           git add . 
           git commit -m "deleting old ghp"
-          git push -u origin gh-pages
           git remote set-branches --add origin main
           git fetch origin main:main
           git checkout main
           git pull origin main
-          pwd
 
       - name: Build Sphinx documentation
         run: |
@@ -124,6 +122,8 @@ jobs:
       - name: Copy HTML files
         run: |
           rm -rf *
+          pwd
+          ls
           cp -r docs/_build/html/* .
 
 #      - name: Switch to gh-pages branch and copy files
