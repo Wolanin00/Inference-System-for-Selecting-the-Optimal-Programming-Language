@@ -116,7 +116,7 @@ jobs:
 
       - name: Switch to gh-pages branch and copy files
         run: |
-          git checkout gh-pages
+          git checkout -f gh-pages
           cp -r docs/_build/html/* .
           git add .
           git commit -m "Update documentation"
