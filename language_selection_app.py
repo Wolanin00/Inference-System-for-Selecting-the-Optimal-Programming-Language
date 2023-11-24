@@ -20,6 +20,7 @@ class LanguageSelectionApp:
         app = LanguageSelectionApp(master=root, model=fitted_model)
         root.mainloop()
     """
+
     def __init__(self, master: tk.Tk, model: SVC):
         # SET UI
         master.title("Choosing a Programming Language")
@@ -210,7 +211,9 @@ class LanguageSelectionApp:
             button.config(text="YES", bg="green")
             switch_var.set(True)
 
-    def update_model_about_preferred_lang(self, selected_option: tk.StringVar | None) -> None:
+    def update_model_about_preferred_lang(
+        self, selected_option: tk.StringVar | None
+    ) -> None:
         """
         Update model about preferred lang
 
