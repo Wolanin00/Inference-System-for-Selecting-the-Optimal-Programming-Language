@@ -91,28 +91,12 @@ jobs:
       - name: Build Sphinx documentation
         run: |
           cd docs
-          make clean && make html
+          make clean
+          make html
 
-      - name: Check if gh-pages branch exists, if not create it
-        run: |
-          git fetch origin gh-pages:gh-pages || git checkout --orphan gh-pages
-
-      - name: Configure Git user identity
-        run: |
-          git config user.email "szewczykmateusz64@gmail.com"
-          git config user.name "Mateusz Szewczyk"
-
-      - name: Check for uncommitted changes
-        run: |
-          if [[ -n $(git status -s) ]]; then
-            git add .
-            git commit -m "Committing changes before switching branches"
-          fi
-
-      - name: Copy files to gh-pages branch
+      - name: Switch to gh-pages branch and copy files
         run: |
           git checkout gh-pages
-          rm -rf *
           cp -r docs/_build/html/* .
           git add .
           git commit -m "Update documentation"
