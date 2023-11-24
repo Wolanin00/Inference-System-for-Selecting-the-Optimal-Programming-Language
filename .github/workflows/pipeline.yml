@@ -92,3 +92,4 @@ jobs:
         run: |
           git checkout main
           cd docs
+          make clean
