@@ -91,7 +91,7 @@ jobs:
       - name: Test creating
         run: |
           pwd
-          git remote set-branch --add origin gh-pages
+          git remote set-branches --add origin gh-pages
           git fetch origin gh-pages:gh-pages
           git reset --hard
           git checkout gh-pages
