@@ -130,8 +130,8 @@ jobs:
           git status
           mv docs/_build/html/* .
           git status
-          git checkout -f gh-pages
-          git status
+#          git checkout -f gh-pages
+#          git status
 
       - name: Commit and push to gh-pages
         run: |
