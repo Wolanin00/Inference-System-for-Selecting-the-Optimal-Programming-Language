@@ -3,5 +3,3 @@ scikit-learn==1.3.2
 pytest
 openpyxl
 black
-sphinx
-furo
