@@ -2,7 +2,7 @@ import os
 import sys
 
 # Add sys path
-sys.path.insert(0, os.path.abspath("../../"))
+sys.path.insert(0, os.path.abspath("../"))
 
 # source_suffix = ['.rst', '.md']
 source_suffix = ".rst"
@@ -46,4 +46,4 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "furo"
-html_static_path = []
+html_static_path = ["_static"]
