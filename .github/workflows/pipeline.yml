@@ -121,10 +121,8 @@ jobs:
         run: |
           git checkout -f gh-pages
           tree
-          git checkout main docs/_build/html/* .
-          tree
-          git checkout -f gh-pages
-          tree
+          git checkout main docs/_build/html/*
+          mv Inference-System-for-Selecting-the-Optimal-Programming-Language/docs/_build/html/* .
 
 #      - name: Copy HTML files
 #        run: |
