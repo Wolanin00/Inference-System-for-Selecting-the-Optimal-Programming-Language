@@ -120,9 +120,9 @@ jobs:
       - name: Checkout gh-pages branch
         run: |
           git checkout -f gh-pages
-          git checkout main docs/_build/html/*
-          cd docs
-          ls
+          tree
+          git checkout main docs/_build/html/* .
+          tree
 
 #      - name: Copy HTML files
 #        run: |
