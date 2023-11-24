@@ -97,6 +97,13 @@ jobs:
         run: |
           git fetch origin gh-pages:gh-pages || git checkout --orphan gh-pages
 
+      - name: Check for uncommitted changes
+        run: |
+          if [[ -n $(git status -s) ]]; then
+            git add .
+            git commit -m "Committing changes before switching branches"
+          fi
+
       - name: Copy files to gh-pages branch
         run: |
           git checkout gh-pages
