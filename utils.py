@@ -79,7 +79,7 @@ def get_model(data: list, preferred_language: str = None) -> SVC:
     """
     if preferred_language:
         sample_weights = {class_label: 1.0 for class_label in data[1].unique()}
-        sample_weights[preferred_language] = 2.0
+        sample_weights[preferred_language] = 1.5
 
         svm_model = SVC(class_weight=sample_weights)
         svm_model.fit(data[0], data[1])
