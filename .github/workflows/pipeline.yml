@@ -121,6 +121,7 @@ jobs:
         run: |
           git checkout -f gh-pages
           git checkout main docs/_build/html/*
+          cd docs
           ls
 
 #      - name: Copy HTML files
