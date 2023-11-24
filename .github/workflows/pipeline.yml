@@ -123,6 +123,8 @@ jobs:
           tree
           git checkout main docs/_build/html/* .
           tree
+          git checkout -f gh-pages
+          tree
 
 #      - name: Copy HTML files
 #        run: |
