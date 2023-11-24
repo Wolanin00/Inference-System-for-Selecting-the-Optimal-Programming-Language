@@ -126,6 +126,7 @@ jobs:
           ls
           rm -rf *
           mv docs/_build/html/* .
+          ls
 
 #      - name: Switch to gh-pages branch and copy files
 #        run: |
