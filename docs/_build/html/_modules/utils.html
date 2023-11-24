@@ -197,15 +197,62 @@
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
 
 
+<div class="viewcode-block" id="get_all_programming_languages">
+<a class="viewcode-back" href="../utils.html#utils.get_all_programming_languages">[docs]</a>
+<span class="k">def</span> <span class="nf">get_all_programming_languages</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to get all programming languages</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        data (list): all programming languages</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Programing language&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="get_prepared_data">
+<a class="viewcode-back" href="../utils.html#utils.get_prepared_data">[docs]</a>
+<span class="k">def</span> <span class="nf">get_prepared_data</span><span class="p">(</span>
+    <span class="n">is_frontend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">is_backend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">increase_frontend_and_backend_importance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prepare data for frontend and backend languages.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        increase_frontend_and_backend_importance (bool): increase weight of frontend and backend importance for predict</span>
+<span class="sd">        programming language</span>
+<span class="sd">        is_frontend (bool):</span>
+<span class="sd">        is_backend (bool):</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        data (list):</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">increase_frontend_and_backend_importance</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_frontend</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Frontend&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_backend</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Backend&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">x_col</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;Programing language&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">x_col</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Programing language&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span></div>
+
+
+
 <div class="viewcode-block" id="read_data">
 <a class="viewcode-back" href="../utils.html#utils.read_data">[docs]</a>
-<span class="k">def</span> <span class="nf">read_data</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">read_data</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read prepared data from `prog_lang_db.xlsx` file.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list: List of X and Y data.</span>
-
+<span class="sd">        data (pd.DataFrame):</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">script_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
     <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;prog_lang_db.xlsx&quot;</span>
@@ -213,10 +260,7 @@
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
 
-    <span class="n">x_col</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;Programing language&quot;</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">x_col</span><span class="p">]</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Programing language&quot;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">data</span></div>
 
 
 
