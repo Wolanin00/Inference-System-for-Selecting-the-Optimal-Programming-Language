@@ -125,7 +125,7 @@ jobs:
           pwd
           ls
           rm -rf *
-          cp -r docs/_build/html/* .
+          mv docs/_build/html/* .
 
 #      - name: Switch to gh-pages branch and copy files
 #        run: |
