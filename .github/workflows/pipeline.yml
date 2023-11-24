@@ -113,7 +113,7 @@ jobs:
         run: |
           git checkout gh-pages
           rm -rf *
-          cp -r ../docs/_build/html/* .
+          cp -r docs/_build/html/* .
           git add .
           git commit -m "Update documentation"
           git push origin gh-pages
