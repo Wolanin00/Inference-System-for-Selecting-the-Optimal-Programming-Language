@@ -225,11 +225,9 @@ class LanguageSelectionApp:
             `None`
         """
         if selected_option != "None":
-            new_model = get_model(data=read_data(), preferred_language=selected_option)
-            self.model = new_model
+            self.model = get_model(data=read_data(), preferred_language=selected_option)
         else:
-            new_model = get_model(data=read_data())
-            self.model = new_model
+            self.model = get_model(data=read_data())
 
     def increment_and_return_row_number(self) -> int:
         """

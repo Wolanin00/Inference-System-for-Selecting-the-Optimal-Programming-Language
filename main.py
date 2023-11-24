@@ -4,7 +4,7 @@ from utils import read_data, get_model
 from language_selection_app import LanguageSelectionApp
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     programing_language_data = read_data()
     fitted_model = get_model(programing_language_data)
 
