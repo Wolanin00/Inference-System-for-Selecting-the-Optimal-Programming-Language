@@ -123,7 +123,7 @@ jobs:
       - name: Copy HTML files
         run: |
           rm -rf *
-          cp -r ../docs/_build/html/* .
+          cp -r docs/_build/html/* .
 
 #      - name: Switch to gh-pages branch and copy files
 #        run: |
