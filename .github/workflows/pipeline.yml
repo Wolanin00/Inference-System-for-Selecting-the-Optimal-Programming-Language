@@ -88,7 +88,7 @@ jobs:
           pip install sphinx
           pip install furo
 
-      - name: Test creating
+      - name: Prepare branches
         run: |
           git config --global user.email "szewczykmateusz64@gmail.com"
           git config --global user.name "Mateusz Szewczyk"
@@ -102,7 +102,6 @@ jobs:
           done
           git add . 
           git commit -m "deleting old ghp"
-          
           git remote set-branches --add origin main
           git fetch origin main:main
           git checkout main
@@ -114,37 +113,13 @@ jobs:
           make clean
           make html
 
-      - name: Print contents of _build/html directory
-        run: ls docs/_build/html
-
-      - name: Checkout gh-pages branch
+      - name: Switch to gh-pages branch and copy files
         run: |
           git checkout -f gh-pages
-          tree
           git checkout main docs/_build/html/*
-          tree
           mv docs/_build/html/* .
           git checkout -f gh-pages
-          tree          
 
-#      - name: Copy HTML files
-#        run: |
-#          pwd
-#          ls
-#          rm -rf *
-#          mv docs/_build/html/* .
-#          ls
-
-#      - name: Switch to gh-pages branch and copy files
-#        run: |
-#          ls
-#          pwd
-#          mv _build/html ../.
-#          cd ../../../.
-#          rm -rf python
-#          mv html/* .
-#          rm -rf html
-#          git add .
-#          git commit -m "generating gh-pages docs `date +'%Y-%m-%d'`"
-#          ls -lA
-#          git push -u origin gh-pages
+      - name: Push to gh-pages
+        run: |
+          git push -u origin gh-pages
