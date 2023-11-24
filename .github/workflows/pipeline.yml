@@ -98,11 +98,18 @@ jobs:
           git reset --hard
           git checkout gh-pages
           if [ "$(ls -A)" ]; then
+            # If there are files, delete them
             for i in $(ls); do
               rm -rf $i
             done
-            git add .
-            git commit -m "deleting old ghp"
+          
+            # Check if there are any changes to commit
+            if git status --porcelain | grep .; then
+              git add .
+              git commit -m "deleting old ghp"
+            else
+              echo "No changes to commit in gh-pages branch."
+            fi
           else
             echo "No files to delete in gh-pages branch."
           fi
@@ -123,9 +130,9 @@ jobs:
           git checkout main docs/_build/html/*
           mv docs/_build/html/* .
           git checkout -f gh-pages
+
+      - name: Commit and push to gh-pages
+        run: |
           git add . 
           git commit -m "auto-generated ghp"
-
-      - name: Push to gh-pages
-        run: |
           git push -u origin gh-pages
