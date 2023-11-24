@@ -119,6 +119,8 @@ jobs:
           git checkout main docs/_build/html/*
           mv docs/_build/html/* .
           git checkout -f gh-pages
+          git add . 
+          git commit -m "auto-generated ghp"
 
       - name: Push to gh-pages
         run: |
