@@ -1,6 +1,7 @@
 import pandas as pd
 import tkinter as tk
 from utils import read_data, get_model
+from typing import Union
 from sklearn.svm import SVC
 
 
@@ -211,7 +212,7 @@ class LanguageSelectionApp:
             button.config(text="YES", bg="green")
             switch_var.set(True)
 
-    def update_model_about_preferred_lang(self, selected_option: str | None) -> None:
+    def update_model_about_preferred_lang(self, selected_option: Union[str, None]) -> None:
         """
         Update model about preferred lang
 
