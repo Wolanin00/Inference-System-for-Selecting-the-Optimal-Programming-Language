@@ -123,8 +123,8 @@ jobs:
         run: |
           cd docs
           make clean & make html
-          git add . 
-          git commit -m "tmp commit"
+#          git add .
+#          git commit -m "tmp commit"
 
       - name: Switch to gh-pages branch and copy files
         run: |
