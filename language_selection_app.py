@@ -210,7 +210,7 @@ class LanguageSelectionApp:
             button.config(text="YES", bg="green")
             switch_var.set(True)
 
-    def update_model_about_preferred_lang(self, selected_option: tk.StringVar | None) -> None:
+    def update_model_about_preferred_lang(self, selected_option: str | None) -> None:
         """
         Update model about preferred lang
 
