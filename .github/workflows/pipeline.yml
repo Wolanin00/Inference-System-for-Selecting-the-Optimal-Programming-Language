@@ -116,15 +116,14 @@ jobs:
           git remote set-branches --add origin main
           git fetch origin main:main
           git checkout main
-          git pull
-          git fetch
           git pull origin main
 
       - name: Build Sphinx documentation
         run: |
           cd docs
           make clean & make html
-          cd ../.
+          git add . 
+          git commit -m "tmp commit"
 
       - name: Switch to gh-pages branch and copy files
         run: |
