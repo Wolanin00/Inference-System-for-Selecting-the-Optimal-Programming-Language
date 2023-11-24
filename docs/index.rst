@@ -1,7 +1,5 @@
-Inference System for Selecting the Optimal Programming Language's documentation!
-================================================================================
-
-Test new ghp
+Inference System for Selecting the Optimal Programming Language's documentation!!
+=================================================================================
 
 .. toctree::
    :maxdepth: 4
