@@ -117,12 +117,19 @@ jobs:
       - name: Print contents of _build/html directory
         run: ls docs/_build/html
 
-      - name: Switch to gh-pages branch and copy files
+      - name: Checkout gh-pages branch
+        run: git checkout -f gh-pages
+
+      - name: Copy HTML files
         run: |
-          git checkout -f gh-pages
-          ls
-          pwd
-          mv _build/html ../.
+          rm -rf *
+          cp -r ../docs/_build/html/* .
+
+#      - name: Switch to gh-pages branch and copy files
+#        run: |
+#          ls
+#          pwd
+#          mv _build/html ../.
 #          cd ../../../.
 #          rm -rf python
 #          mv html/* .
