@@ -244,7 +244,7 @@ class LanguageSelectionApp:
 
     def get_predict(self, model_to_predict: SVC) -> None:
         """
-        Get predicted programing language
+        Get predicted programing language.
 
         Args:
             model_to_predict (SVC):
