@@ -97,11 +97,15 @@ jobs:
           git fetch origin gh-pages:gh-pages
           git reset --hard
           git checkout gh-pages
-          for i in `ls` ; do
-          rm -rf $i
-          done
-          git add . 
-          git commit -m "deleting old ghp"
+          if [ "$(ls -A)" ]; then
+            for i in $(ls); do
+              rm -rf $i
+            done
+            git add .
+            git commit -m "deleting old ghp"
+          else
+            echo "No files to delete in gh-pages branch."
+          fi
           git remote set-branches --add origin main
           git fetch origin main:main
           git checkout main
