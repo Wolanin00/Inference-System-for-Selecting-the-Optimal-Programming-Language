@@ -88,6 +88,25 @@ jobs:
           pip install sphinx
           pip install furo
 
+      - name: Test creating
+        run: |
+          pwd
+          cd ../..
+          git remote set-branch --add origin gh-pages
+          git fetch origin gh-pages:gh-pages
+          git reset --hard
+          git checkout gh-pages
+          for i in `ls` ; do
+          rm -rf $i
+          done
+          git add . 
+          git commit -m "deleting old ghp"
+          git remote set-branches --add origin main
+          git fetch origin main:main
+          git checkout main
+          git pull origin main
+          pwd
+
       - name: Build Sphinx documentation
         run: |
           cd docs
