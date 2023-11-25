@@ -45,7 +45,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 pygments = "sphinx"
 
 # My own favicon
-html_favicon = '_static/favicon.ico'
+html_favicon = "_static/favicon.ico"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
