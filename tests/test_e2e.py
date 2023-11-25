@@ -19,7 +19,9 @@ class TestE2E(unittest.TestCase):
         """
         scale = 100
 
-        python_index = self.data[1][self.data[1] == "Python"].index[0]
+        language = "Python/Django"
+
+        python_index = self.data[1][self.data[1] == language].index[0]
         python_value = self.data[0][self.data[0].index == python_index]
 
         all_columns = list(self.data[0].columns)
@@ -38,4 +40,4 @@ class TestE2E(unittest.TestCase):
         self.app.result_button.invoke()
         result_text = self.app.result_label.cget("text")
         result_text_splitted = result_text.split(" ")
-        self.assertEqual(result_text_splitted[1], "Python")
+        self.assertEqual(result_text_splitted[1], language)
