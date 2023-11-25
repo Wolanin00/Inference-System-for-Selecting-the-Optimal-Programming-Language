@@ -2,7 +2,7 @@
 <html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+    <meta name="color-scheme" content="light dark"><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>utils - Inference System for Selecting the Optimal Programming Language</title>
@@ -155,8 +155,16 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../language_selection_app.html">Application</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Utils</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../inference_system.html">Inference System</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Inference System</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../language_selection_app.html">Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../example_call.html">Example Call</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../additional_features.html">Additional Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Project</a></li>
 </ul>
 
 </div>
@@ -223,19 +231,23 @@
 <span class="sd">    Prepare data for frontend and backend languages.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        increase_frontend_and_backend_importance (bool): increase weight of frontend and backend importance for predict</span>
-<span class="sd">        programming language</span>
-<span class="sd">        is_frontend (bool):</span>
-<span class="sd">        is_backend (bool):</span>
+<span class="sd">        increase_frontend_and_backend_importance (bool): increase weight of frontend and backend importance for predict programming language</span>
+<span class="sd">        is_frontend (bool): return only frontend languages</span>
+<span class="sd">        is_backend (bool): return only backend languages</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        data (list):</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">increase_frontend_and_backend_importance</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_frontend</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_frontend</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Frontend&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Frontend&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_backend</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">is_backend</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Backend&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Backend&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span>
 
     <span class="n">x_col</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;Programing language&quot;</span><span class="p">)</span>

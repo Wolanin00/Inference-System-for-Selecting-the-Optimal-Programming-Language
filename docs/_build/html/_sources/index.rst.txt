@@ -5,8 +5,12 @@ Inference System for Selecting the Optimal Programming Language's documentation!
    :maxdepth: 4
 
    installation
-   language_selection_app
-   utils
+   inference_system
+   example_call
+   use_cases
+   additional_features
+   tests
+   about
 
 
 Indices and tables
