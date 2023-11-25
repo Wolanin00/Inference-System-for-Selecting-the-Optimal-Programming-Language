@@ -41,10 +41,14 @@ extensions = [
 templates_path = ["_templates"]
 html_static_path = ["_static"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+
 pygments = "sphinx"
 
+# My own favicon
+html_favicon = "_static/favicon.ico"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
+# Sphinx theme
 html_theme = "furo"
