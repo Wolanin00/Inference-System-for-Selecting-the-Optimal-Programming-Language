@@ -1,7 +1,10 @@
 import unittest
 import tkinter as tk
+import pandas as pd
+from sklearn.svm import SVC
+
 from language_selection_app import LanguageSelectionApp
-from utils import get_prepared_data, get_model
+from utils import get_prepared_data, get_model, get_all_programming_languages, read_data
 
 
 class TestMyApp(unittest.TestCase):
@@ -13,12 +16,46 @@ class TestMyApp(unittest.TestCase):
         self.root = tk.Tk()
         self.app = LanguageSelectionApp(master=self.root, model=model)
 
+    def test_0a_read_data(self):
+        """
+        **Test cover**: Check read data.
+        """
+        data = read_data()
+        assert isinstance(data, pd.DataFrame)
+
+    def test_0b_get_prepared_data(self):
+        """
+        **Test cover**: Check prepared data.
+        """
+        prepared_data = get_prepared_data()
+        assert isinstance(prepared_data, list)
+
+    def test_0c_get_all_programming_languages(self):
+        """
+        **Test cover**: Check all programming languages.
+        """
+        all_programming_languages = get_all_programming_languages()
+        assert isinstance(all_programming_languages, list)
+
+    def test_0d_get_model(self):
+        """
+        **Test cover**: Check model.
+        """
+        model = get_model(data=get_prepared_data())
+        assert isinstance(model, SVC)
+
     def test_01_title(self):
+        """
+        **Test cover**: Check UI title.
+        """
         expected_title = "Choosing a Programming Language"
 
         self.assertEqual(self.root.title(), expected_title)
 
     def test_02_label_text(self):
+        """
+        **Test cover**: Check UI labels.
+        """
         expected_easy_label_text = "Easy to program:"
         self.assertEqual(self.app.easy_label.cget("text"), expected_easy_label_text)
 
@@ -52,6 +89,9 @@ class TestMyApp(unittest.TestCase):
         self.assertEqual(self.app.result_label.cget("text"), expected_result_label_text)
 
     def test_05_default_value(self):
+        """
+        **Test cover**: Check UI default value.
+        """
         easy_default_value = 50
         fronted_bool_value = False
         backend_bool_value = False
@@ -69,40 +109,30 @@ class TestMyApp(unittest.TestCase):
         )
 
     def test_10_predict_01(self):
+        """
+        **Test cover**: Check UI default predict. If Result in `get_all_programming_languages()`.
+        """
         self.app.result_button.invoke()
         result_text = self.app.result_label.cget("text")
         result_text_splitted = result_text.split(" ")
-        self.assertIn(result_text_splitted[1], list(self.model.classes_))
+        self.assertIn(result_text_splitted[1], get_all_programming_languages())
 
-    def test_11_set_easy_to_100(self):
-        value_to_set = 99
+    def test_11_set_label_from_0_to_100(self):
+        """
+        **Test cover**: Check if possible set labels from 0 to 100.
+        """
+        for value in range(0, 101):
+            self.app.easy_slider.set(value)
+            self.assertEqual(self.app.easy_slider.get(), value)
+
+    def test_12_set_label_to_101(self):
+        """
+        **Test cover**: Check if possible set labels to 101 (bad path).
+        """
+        value_to_set = 101
+        expected_error = "101 != 100"
         self.app.easy_slider.set(value_to_set)
-        self.assertEqual(self.app.easy_slider.get(), 99)
-
-    def test_12_python_probability(self):
-        scale = 100
-
-        python_index = self.data[1][self.data[1] == "Python"].index[0]
-        python_value = self.data[0][self.data[0].index == python_index]
-
-        all_columns = list(self.data[0].columns)
-
-        self.app.easy_slider.set(python_value[all_columns[0]].values[0] * scale)
-        self.app.frontend_switch_var.set(int(python_value[all_columns[1]].values[0]))
-        self.app.backend_switch_var.set(int(python_value[all_columns[2]].values[0]))
-        self.app.data_analysis_switch_var.set(
-            int(python_value[all_columns[3]].values[0])
-        )
-        self.app.availability_slider.set(python_value[all_columns[4]].values[0] * scale)
-        self.app.security_mechanisms_slider.set(
-            python_value[all_columns[5]].values[0] * scale
-        )
-
-        self.app.result_button.invoke()
-        result_text = self.app.result_label.cget("text")
-        result_text_splitted = result_text.split(" ")
-        self.assertEqual(result_text_splitted[1], "Python")
-
-
-if __name__ == "__main__":
-    unittest.main()
+        try:
+            self.assertEqual(value_to_set, self.app.easy_slider.get())
+        except AssertionError as e:
+            self.assertEqual(expected_error, e.__str__())

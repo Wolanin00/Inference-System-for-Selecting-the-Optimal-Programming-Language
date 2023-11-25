@@ -250,10 +250,10 @@ class LanguageSelectionApp:
             `None`
         """
         if switch_var.get():
-            button.config(text="NO", bg="red")
+            button.config(text="NO", bg="grey")
             switch_var.set(False)
         else:
-            button.config(text="YES", bg="green")
+            button.config(text="YES", bg="dark goldenrod")
             switch_var.set(True)
 
     def update_model_about_preferred_lang(
