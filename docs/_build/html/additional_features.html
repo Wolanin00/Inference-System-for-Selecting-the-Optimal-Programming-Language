@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -194,7 +194,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -202,6 +202,30 @@
         <article role="main">
           <section id="additional-features">
 <h1>Additional Features<a class="headerlink" href="#additional-features" title="Link to this heading">#</a></h1>
+<p>Additional features in <em>Inference System for Selecting the Optimal Programming Language</em> project.</p>
+<section id="self-generating-documentation">
+<h2>Self-generating Documentation<a class="headerlink" href="#self-generating-documentation" title="Link to this heading">#</a></h2>
+<p>Self-generating documentation after every merge to the <cite>main</cite> branch.
+It uses the <cite>Sphinx</cite> framework and the <cite>Furo</cite> theme.</p>
+<p>Link for GitHub Action -&gt; <a href="https://github.com/Wolanin00/Inference-System-for-Selecting-the-Optimal-Programming-Language/actions/workflows/pages/pages-build-deployment" target="_blank">Self-generating Documentation</a></p>
+</section>
+<hr class="docutils" />
+<section id="pipelines">
+<h2>Pipelines<a class="headerlink" href="#pipelines" title="Link to this heading">#</a></h2>
+<p>Link for GitHub Action -&gt; <a href="https://github.com/Wolanin00/Inference-System-for-Selecting-the-Optimal-Programming-Language/actions/workflows/pipeline.yml" target="_blank">Pipeline</a></p>
+<hr class="docutils" />
+<section id="tests-pipeline">
+<h3>Tests pipeline<a class="headerlink" href="#tests-pipeline" title="Link to this heading">#</a></h3>
+<p>After each push from dev or main branch, a pipeline using the <cite>pytest</cite> framework automatically run all tests.
+If all tests do not pass on the dev branch, it will not be possible to merge changes to the main branch.</p>
+</section>
+<hr class="docutils" />
+<section id="code-formatter-pipeline">
+<h3>Code Formatter pipeline<a class="headerlink" href="#code-formatter-pipeline" title="Link to this heading">#</a></h3>
+<p>After each push from dev or main branch, a pipeline using the <cite>black</cite> framework automatically formats the code
+according to PEP 8 standards. The formatted changes are committed and pushed to the used branch.</p>
+</section>
+</section>
 </section>
 
         </article>
@@ -247,8 +271,32 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Additional Features</a><ul>
+<li><a class="reference internal" href="#self-generating-documentation">Self-generating Documentation</a></li>
+<li><a class="reference internal" href="#pipelines">Pipelines</a><ul>
+<li><a class="reference internal" href="#tests-pipeline">Tests pipeline</a></li>
+<li><a class="reference internal" href="#code-formatter-pipeline">Code Formatter pipeline</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

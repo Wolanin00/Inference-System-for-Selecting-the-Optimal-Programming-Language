@@ -15,7 +15,7 @@ class TestE2E(unittest.TestCase):
 
     def test_1_python_probability(self):
         """
-        **Test cover**: Set all parameters for `Python`, and verify if `Python` predicted.
+        **Test cover**: Set all parameters for `Python/Django`, and verify if `Python/Django` predicted.
         """
         scale = 100
 
