@@ -42,3 +42,12 @@ To run tests go to main folder and run command -> `pytest`
 
 ### Features:
 - User can set "Preferred Language" in Option Menu to set double weight in prediction
+
+## Release 3 (16.12.2023)
+### UI:
+<img src="./static/scn/Release_3_UI.jpg" alt="Screenshot"/>
+
+### Features:
+- changing UI colors to more subdued,
+- add 'Frontend and Backend importance' button,
+- update algorithm into SVC (Support Vector Classifier)
