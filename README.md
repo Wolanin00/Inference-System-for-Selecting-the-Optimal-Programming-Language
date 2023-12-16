@@ -14,6 +14,13 @@ Go to root folder and install all dependencies -> `pip install -r requirements.t
 
 Go to root folder and run `main.py` file -> `python main.py`
 
+## Building documentation locally
+Go to `cd docs` folder
+
+Run command -> `make clean & make html`
+
+Go to `cd _build/html` folder and open `index.html` file on your preferred browser.
+
 ## Tests
 To run tests go to main folder and run command -> `pytest`
 

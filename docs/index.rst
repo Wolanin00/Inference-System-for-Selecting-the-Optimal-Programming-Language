@@ -6,7 +6,7 @@ Inference System for Selecting the Optimal Programming Language's documentation!
 
    installation
    inference_system
-   example_call
+   example_usage
    use_cases
    additional_features
    tests
